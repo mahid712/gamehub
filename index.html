@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Selection Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Basic Reset and Font */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e; /* Dark background as fallback */
+            color: #e4e6eb; /* Light text */
+            min-height: 100vh;
+
+            /* --- RANDOM WALLPAPER STYLES (JS will set the image URL) --- */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* --- END WALLPAPER STYLES --- */
+        }
+
+        /* Page Header Styling */
+        .page-header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: rgba(15, 15, 27, 0.8); /* Transparent background for header */
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Container for all game cards (using Flexbox for layout) */
+        .game-panel-container {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 30px; 
+            padding: 20px;
+        }
+
+        /* Individual Game Card Styling */
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            width: 300px; 
+            min-height: 350px;
+            background-color: rgba(44, 44, 71, 0.9); /* Transparent background for cards */
+            border-radius: 12px;
+            overflow: hidden; 
+            text-decoration: none; 
+            color: inherit; 
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Hover Effect for Interaction */
+        .game-card:hover:not(.unavailable) {
+            transform: translateY(-5px); 
+            box-shadow: 0 12px 25px rgba(0, 191, 255, 0.4); 
+        }
+
+        /* Placeholder for Game Images */
+        .game-image-placeholder {
+            height: 180px;
+            border-bottom: 3px solid #6a0dad; 
+            
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* GAME IMAGE PATHS - STILL ASSUME THEY ARE IN 'images' FOLDER */
+        .game-1 { 
+            background-image: url('maze.png');
+            background-color: #6d4c41; 
+        }
+
+        .game-2 { 
+            background-image: url('flappybird.png');
+            background-color: #4fc3f7; 
+        }
+
+        /* Game Information Text Area and Status Styles remain the same... */
+        .game-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-title {
+            font-size: 1.5em;
+            margin: 0 0 8px 0;
+            color: #00bfff; 
+        }
+
+        .game-description {
+            font-size: 0.9em;
+            margin: 0 0 15px 0;
+            color: #b0b0d0;
+            flex-grow: 1; 
+        }
+
+        .game-status {
+            font-weight: bold;
+            font-size: 0.85em;
+            padding: 5px 10px;
+            border-radius: 4px;
+            align-self: flex-start; 
+            background-color: #4CAF50; 
+            color: #ffffff;
+        }
+
+        .game-card.unavailable {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none; 
+        }
+
+        .game-card.unavailable .game-status {
+            background-color: #F44336; 
+        }
+
+        @media (max-width: 768px) {
+            .game-card {
+                width: 100%; 
+                max-width: 400px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>Select a Game to Play</h1>
+    </header>
+
+    <div class="game-panel-container">
+        
+        <a href="https://dhanushshenoy746.github.io/maze/" class="game-card" data-game-title="Maze Pathfinder" target="_blank">
+            <div class="game-image-placeholder game-1"></div>
+            <div class="game-info">
+                <h2 class="game-title">Maze Pathfinder</h2>
+                <p class="game-description">Navigate complex 3D mazes and find the shortest route to freedom!</p>
+                <span class="game-status">Ready to Play</span>
+            </div>
+        </a>
+
+        <a href="https://mahid712.github.io/flappymulti/" class="game-card" data-game-title="Flappy Bird" target="_blank">
+            <div class="game-image-placeholder game-2"></div>
+            <div class="game-info">
+                <h2 class="game-title">Flappy Bird</h2>
+                <p class="game-description">Tap the screen to fly the bird and avoid the dangerous pipes.</p>
+                <span class="game-status">Ready to Play</span>
+            </div>
+        </a>
+
+    </div>
+
+    <script>
+        // --- RANDOM WALLPAPER LOGIC ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const numWallpapers = 5; // Set this number to the total count of your background images
+            
+            // 1. Generate a random number between 1 and numWallpapers (e.g., 1 to 5)
+            const randomIndex = Math.floor(Math.random() * numWallpapers) + 1;
+            
+            // 2. Construct the file path using the random index
+            // *** THIS LINE WAS CHANGED: Removed 'images/' path prefix ***
+            const wallpaperPath = `bg${randomIndex}.jpg`; 
+            
+            // 3. Apply the path to the body's background-image style
+            document.body.style.backgroundImage = `url('${wallpaperPath}')`;
+
+            console.log(`Wallpaper loaded: ${wallpaperPath}`);
+        });
+        // --- END RANDOM WALLPAPER LOGIC ---
+
+
+        // Game Card Click Logic
+        const gameCards = document.querySelectorAll('.game-card');
+
+        gameCards.forEach(card => {
+            card.addEventListener('click', function(event) {
+                const gameTitle = this.getAttribute('data-game-title');
+                const isUnavailable = this.classList.contains('unavailable');
+
+                if (isUnavailable) {
+                    event.preventDefault(); 
+                    console.log(`[Launch Failed] ${gameTitle} is currently unavailable for play.`);
+                    alert(`Sorry, ${gameTitle} is currently unavailable!`);
+                } else {
+                    console.log(`[Launch Success] Attempting to open: ${gameTitle}`);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
