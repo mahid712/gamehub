@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Selection Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Basic Reset and Font */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e;
+            color: #e4e6eb; 
+            min-height: 100vh;
+        }
+
+        /* Page Header Styling */
+        .page-header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #0f0f1b;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Container for all game cards (using Flexbox for layout) */
+        .game-panel-container {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 30px; 
+            padding: 20px;
+        }
+
+        /* Individual Game Card Styling */
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            width: 300px; 
+            min-height: 350px;
+            background-color: #2c2c47;
+            border-radius: 12px;
+            overflow: hidden; 
+            text-decoration: none; 
+            color: inherit; 
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Hover Effect for Interaction */
+        .game-card:hover:not(.unavailable) {
+            transform: translateY(-5px); 
+            box-shadow: 0 12px 25px rgba(0, 191, 255, 0.4); 
+        }
+
+        /* Placeholder for Game Images */
+        .game-image-placeholder {
+            height: 180px;
+            border-bottom: 3px solid #6a0dad; 
+            
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* UPDATED IMAGE PATHS HERE */
+        .game-1 { 
+            background-image: url('images/maze.png');
+            background-color: #6d4c41; /* Fallback for Maze Pathfinder */
+        }
+
+        .game-2 { 
+            background-image: url('images/flappybird.png');
+            background-color: #4fc3f7; /* Fallback for Flappy Bird */
+        }
+
+
+        /* Game Information Text Area */
+        .game-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-title {
+            font-size: 1.5em;
+            margin: 0 0 8px 0;
+            color: #00bfff; 
+        }
+
+        .game-description {
+            font-size: 0.9em;
+            margin: 0 0 15px 0;
+            color: #b0b0d0;
+            flex-grow: 1; 
+        }
+
+        /* Status Indicator */
+        .game-status {
+            font-weight: bold;
+            font-size: 0.85em;
+            padding: 5px 10px;
+            border-radius: 4px;
+            align-self: flex-start; 
+            background-color: #4CAF50; 
+            color: #ffffff;
+        }
+
+        /* Styling for Unavailable Game */
+        .game-card.unavailable {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none; 
+        }
+
+        .game-card.unavailable .game-status {
+            background-color: #F44336; 
+        }
+
+        /* Media Query for smaller screens (responsiveness) */
+        @media (max-width: 768px) {
+            .game-card {
+                width: 100%; 
+                max-width: 400px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>Select a Game to Play</h1>
+    </header>
+
+    <div class="game-panel-container">
+        
+        <a href="https://dhanushshenoy746.github.io/maze/" class="game-card" data-game-title="Maze Pathfinder" target="_blank">
+            <div class="game-image-placeholder game-1"></div>
+            <div class="game-info">
+                <h2 class="game-title">Maze Pathfinder</h2>
+                <p class="game-description">Navigate complex mazes and find the shortest route to freedom!</p>
+                <span class="game-status">Ready to Play</span>
+            </div>
+        </a>
+
+        <a href="https://mahid712.github.io/flappymulti/" class="game-card" data-game-title="Flappy Bird" target="_blank">
+            <div class="game-image-placeholder game-2"></div>
+            <div class="game-info">
+                <h2 class="game-title">Flappy Bird(multiplayer)</h2>
+                <p class="game-description">Tap the screen to fly the bird and avoid the dangerous pipes.</p>
+                <span class="game-status">Ready to Play</span>
+            </div>
+        </a>
+
+    </div>
+
+    <script>
+        const gameCards = document.querySelectorAll('.game-card');
+
+        gameCards.forEach(card => {
+            card.addEventListener('click', function(event) {
+                const gameTitle = this.getAttribute('data-game-title');
+                const isUnavailable = this.classList.contains('unavailable');
+
+                if (isUnavailable) {
+                    event.preventDefault(); 
+                    console.log(`[Launch Failed] ${gameTitle} is currently unavailable for play.`);
+                    alert(`Sorry, ${gameTitle} is currently unavailable!`);
+                } else {
+                    console.log(`[Launch Success] Attempting to open: ${gameTitle}`);
+                    // Note: The new tab opening is handled by the target="_blank" attribute in HTML,
+                    // not by JavaScript here.
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
