@@ -23,7 +23,7 @@
             background-attachment: fixed;
             /* --- END WALLPAPER STYLES --- */
         }
-
+        
         /* Page Header Styling */
         .page-header {
             text-align: center;
@@ -32,7 +32,7 @@
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-
+        
         /* Container for all game cards (using Flexbox for layout) */
         .game-panel-container {
             display: flex;
@@ -79,12 +79,19 @@
             background-image: url('maze.png');
             background-color: #6d4c41; 
         }
-
+        
         .game-2 { 
             background-image: url('flappybird.png');
             background-color: #4fc3f7; 
         }
 
+        /* UPDATED: Styles for the 3rd Game (Sudoku) */
+        .game-3 { 
+            background-image: url('sudoku.png'); /* Assuming you have a 'sudoku.png' image */
+            background-color: #9c27b0; /* A pleasant purple color */
+        }
+        /* END UPDATED */
+        
         /* Game Information Text Area and Status Styles remain the same... */
         .game-info {
             padding: 15px;
@@ -92,20 +99,20 @@
             display: flex;
             flex-direction: column;
         }
-
+        
         .game-title {
             font-size: 1.5em;
             margin: 0 0 8px 0;
             color: #00bfff; 
         }
-
+        
         .game-description {
             font-size: 0.9em;
             margin: 0 0 15px 0;
             color: #b0b0d0;
             flex-grow: 1; 
         }
-
+        
         .game-status {
             font-weight: bold;
             font-size: 0.85em;
@@ -115,42 +122,42 @@
             background-color: #4CAF50; 
             color: #ffffff;
         }
-
+        
         .game-card.unavailable {
             opacity: 0.6;
             cursor: not-allowed;
             pointer-events: none; 
         }
-
+        
         .game-card.unavailable .game-status {
             background-color: #F44336; 
         }
-
+        
         @media (max-width: 768px) {
             .game-card {
                 width: 100%; 
                 max-width: 400px; 
             }
         }
-    </style>
+        </style>
 </head>
 <body>
-
+    
     <header class="page-header">
         <h1>Select a Game to Play</h1>
     </header>
-
+    
     <div class="game-panel-container">
         
         <a href="https://dhanushshenoy746.github.io/maze/" class="game-card" data-game-title="Maze Pathfinder" target="_blank">
             <div class="game-image-placeholder game-1"></div>
             <div class="game-info">
                 <h2 class="game-title">Maze Pathfinder</h2>
-                <p class="game-description">Navigate complex mazes and find the shortest route to freedom!</p>
+                <p class="game-description">Navigate complex 3D mazes and find the shortest route to freedom!</p>
                 <span class="game-status">Ready to Play</span>
             </div>
         </a>
-
+        
         <a href="https://mahid712.github.io/flappymulti/" class="game-card" data-game-title="Flappy Bird" target="_blank">
             <div class="game-image-placeholder game-2"></div>
             <div class="game-info">
@@ -159,9 +166,17 @@
                 <span class="game-status">Ready to Play</span>
             </div>
         </a>
-
-    </div>
-
+        
+        <a href="https://mahid712.github.io/sudoku/" class="game-card" data-game-title="Sudoku Solver" target="_blank">
+            <div class="game-image-placeholder game-3"></div>
+            <div class="game-info">
+                <h2 class="game-title">Sudoku Solver</h2>
+                <p class="game-description">The classic logic-based number-placement puzzle. Sharpen your mind!</p>
+                <span class="game-status">Ready to Play</span>
+            </div>
+        </a>
+        </div>
+    
     <script>
         // --- RANDOM WALLPAPER LOGIC ---
         document.addEventListener('DOMContentLoaded', function() {
@@ -176,12 +191,12 @@
             
             // 3. Apply the path to the body's background-image style
             document.body.style.backgroundImage = `url('${wallpaperPath}')`;
-
+            
             console.log(`Wallpaper loaded: ${wallpaperPath}`);
         });
         // --- END RANDOM WALLPAPER LOGIC ---
-
-
+        
+        
         // Game Card Click Logic
         const gameCards = document.querySelectorAll('.game-card');
 
@@ -202,5 +217,4 @@
     </script>
 
 </body>
-
 </html>
